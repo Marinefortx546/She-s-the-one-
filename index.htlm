@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fcf1eb;
+            color: #4a3e3e;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Seamless scrolling panel layouts */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        /* --- CHAPTER 1: INTRO --- */
+        .chapter-intro {
+            background: linear-gradient(180deg, #fcf1eb 0%, #fae1dd 100%);
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-style: italic;
+            line-height: 1.4;
+            color: #5e4b4b;
+            margin-bottom: 20px;
+            max-width: 700px;
+        }
+
+        .floating-petal {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.4;
+            pointer-events: none;
+            animation: drift 6s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-20px) translateX(15px) rotate(10deg); }
+        }
+
+        .hint-text {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* --- CHAPTER 2: PHOTOPLAY (POLAROIDS) --- */
+        .chapter-gallery {
+            background: linear-gradient(180deg, #fae1dd 0%, #fcd5ce 100%);
+        }
+
+        .chapter-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 40px;
+            color: #5e4b4b;
+        }
+
+        .gallery-stack {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .polaroid {
+            background: #ffffff;
+            padding: 14px 14px 30px 14px;
+            box-shadow: 0 12px 25px rgba(94, 75, 75, 0.06);
+            border-radius: 2px;
+            width: 260px;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0;
+            transform: translateY(40px) rotate(-3deg);
+        }
+
+        /* Alternating subtle rotations for a real messy/aesthetic scrapbook layout */
+        .polaroid:nth-child(even) {
+            transform: translateY(40px) rotate(3deg);
+        }
+
+        .polaroid.active {
+            opacity: 1;
+            transform: translateY(0) rotate(-1.5deg);
+        }
+
+        .polaroid:nth-child(even).active {
+            transform: translateY(0) rotate(2deg);
+        }
+
+        .polaroid:hover {
+            transform: scale(1.04) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(94, 75, 75, 0.12);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #6b5353;
+        }
+
+        /* --- CHAPTER 3: TEXT MESSAGES TRANSITION --- */
+        .chapter-texts {
+            background: linear-gradient(180deg, #fcd5ce 0%, #f7d6c8 100%);
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 15px 20px;
+            border-radius: 22px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+        }
+
+        .chat-bubble.left {
+            background-color: #ffffff;
+            color: #4a3e3e;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble.right {
+            background-color: #e8b4b8;
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* --- CHAPTER 4: CINEMATIC LETTER PROMISE --- */
+        .chapter-letter {
+            background: linear-gradient(180deg, #f7d6c8 0%, #fcf1eb 100%);
+        }
+
+        .paper-note {
+            background: #fffcf7;
+            background-image: linear-gradient(#f2eae1 1px, transparent 1px);
+            background-size: 100% 26px;
+            padding: 45px 35px;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 6px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+            text-align: left;
+            border: 1px solid #e3d2bd;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease;
+        }
+
+        .paper-note.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .note-body {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            font-style: italic;
+            color: #4e4242;
+            margin-bottom: 25px;
+        }
+
+        .bold-promise {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            font-weight: bold;
+            text-align: center;
+            color: #c98a6b;
+            margin-top: 25px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        /* Audio Control Layout */
+        .audio-bar {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            margin-top: 30px;
+        }
+
+        .audio-btn {
+            background: #e8b4b8;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="chapter-intro">
+        <div class="floating-petal" style="top: 15%; left: 10%;">🌸</div>
+        <div class="floating-petal" style="top: 25%; right: 15%; animation-delay: 1s;">✨</div>
+        <div class="floating-petal" style="bottom: 20%; left: 12%; animation-delay: 2s;">🤍</div>
+        <div class="floating-petal" style="bottom: 15%; right: 8%; animation-delay: 1.5s;">🍃</div>
+        
+        <h1 class="main-title">hoping my favorite person scrolls down and finds this today... 🌸</h1>
+        <p class="hint-text">keep scrolling down</p>
+    </section>
+
+    <section class="chapter-gallery">
+        <h2 class="chapter-subtitle">Every single snapshot of us... ✨</h2>
+        <div class="gallery-stack">
+            
+            <div class="polaroid reveal-item">
+                <img src="IMG_2063790000023.jpg" alt="Our Frame 1">
+                <div class="polaroid-caption">where time completely stands still</div>
+            </div>
+
+            <div class="polaroid reveal-item">
+                <img src="YOUR_SECOND_IMAGE_NAME.jpg" alt="Our Frame 2">
+                <div class="polaroid-caption">the smile that changes everything</div>
+            </div>
+
+            <div class="polaroid reveal-item">
+                <img src="YOUR_THIRD_IMAGE_NAME.jpg" alt="Our Frame 3">
+                <div class="polaroid-caption">hidden quiet moments</div>
+            </div>
+
+            <div class="polaroid reveal-item">
+                <img src="YOUR_FOURTH_IMAGE_NAME.jpg" alt="Our Frame 4">
+                <div class="polaroid-caption">captured memories 🤍</div>
+            </div>
+
+            <div class="polaroid reveal-item">
+                <img src="YOUR_FIFTH_IMAGE_NAME.jpg" alt="Our Frame 5">
+                <div class="polaroid-caption">growing through it all together</div>
+            </div>
+
+            <div class="polaroid reveal-item">
+                <img src="YOUR_SIXTH_IMAGE_NAME.jpg" alt="Our Frame 6">
+                <div class="polaroid-caption">my absolute favorite view</div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="chapter-texts">
+        <div class="phone-container">
+            <div class="chat-bubble left reveal-item">
+                I adore everything about you. Even when you're stubborn, and yes... honestly, even your little anger fits. It's all part of the person I love. 🤍
+            </div>
+            <div class="chat-bubble right reveal-item">
+                You have no idea how much even a tiny bit of your absence can completely throw off my entire day. Everything just feels totally empty without you here.
+            </div>
+        </div>
+    </section>
+
+    <section class="chapter-letter">
+        <div class="paper-note reveal-item">
+            <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; margin-bottom: 12px;">My Final Promise</div>
+            
+            <div class="note-body">
+                Thank you for being my constant, my peace, and my favorite storyteller. Every chapter we build together is precious to me.
+            </div>
+            
+            <hr style="border: 0; border-top: 1px dashed #e3d2bd;">
+            
+            <div class="bold-promise">
+                I will come to meet you, Inshallah. And when that day comes, you will meet the man you are truly proud of. 🤍
+            </div>
+
+            <div class="audio-bar">
+                <button class="audio-btn" id="audioToggle" onclick="toggleAudio()">▶</button>
+                <div>
+                    <p style="font-size: 0.8rem; font-weight: 500; color: #4a3e3e;">Background Music</p>
+                    <p style="font-size: 0.68rem; opacity: 0.6;">Press to set the mood</p>
+                </div>
+                <audio id="playerSource" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Elegant continuous scroll reveal tracking 
+        window.addEventListener('scroll', runRevealLogic);
+
+        function runRevealLogic() {
+            const items = document.querySelectorAll('.reveal-item');
+            const viewHeight = window.innerHeight;
+            
+            items.forEach(item => {
+                const itemPos = item.getBoundingClientRect().top;
+                if (itemPos < viewHeight - 100) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Custom music player interactions
+        const coreAudio = document.getElementById('playerSource');
+        const btnToggle = document.getElementById('audioToggle');
+
+        function toggleAudio() {
+            if (coreAudio.paused) {
+                coreAudio.play();
+                btnToggle.innerText = "❚❚";
+            } else {
+                coreAudio.pause();
+                btnToggle.innerText = "▶";
+            }
+        }
+
+        // Initial setup run
+        runRevealLogic();
+    </script>
+</body>
+</html>
+          
